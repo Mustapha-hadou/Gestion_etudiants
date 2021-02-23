@@ -19,8 +19,7 @@ namespace ProjetFinal
 
         public DScnxBd()
         {
-            cnx = "Data Source= 192.168.43.103\\SQLEXPRESS,1433;Network Library=DBMSSOCN; Initial Catalog =Gestion_Etudiant;Integrated Security = true";
-            conn = new SqlConnection(cnx);
+            conn = new SqlConnection(getConnection());
             conn.Open();
             adapter2 = new SqlDataAdapter("SELECT * FROM filliere", conn);
             adapter2.Fill(ds, "filliere");
@@ -28,6 +27,15 @@ namespace ProjetFinal
             conn.Close();
             adapter4.Fill(ds, "etudiant");
 
+        }
+        public static string getConnection()
+        {
+            SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
+            builder.DataSource = "gestion-etud.database.windows.net";
+            builder.UserID = "ge";
+            builder.Password = "123hadouM";
+            builder.InitialCatalog = "Gestion_Etudiants";
+            return builder.ConnectionString;
         }
         public static Boolean verifierExitanceCNE(String cne)
         {
